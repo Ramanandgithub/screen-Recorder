@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screen Recorder</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .controls {
+      position: fixed;
+      top: 70px;
+      left: 300px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button id="startButton">Start Recording</button>
+    <button id="stopButton" disabled>Stop Recording</button>
+  </div>
+
+  <video id="recordedVideo" width="640" height="480" controls></video>
+
+  <script src="script.js"></script>
+</body>
+</html>
