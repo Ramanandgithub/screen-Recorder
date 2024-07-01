@@ -7,6 +7,7 @@
 
 let mediaRecorder;
 let recordedChunks = [];
+let stream;
 
 const startButton = document.getElementById('startButton');
 const stopButton = document.getElementById('stopButton');
@@ -15,12 +16,15 @@ const recordedVideo = document.getElementById('recordedVideo');
 startButton.addEventListener('click', startRecording);
 stopButton.addEventListener('click', stopRecording);
 
-async function startRecording(){
+async function startRecording() {
   try {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: { mediaSource: 'screen' }
+    stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { mediaSource: 'screen' },
+      audio: true
     });
-    mediaRecorder = new MediaRecorder(stream);
+
+    const options = { mimeType: 'video/webm; codecs=vp9' };
+    mediaRecorder = new MediaRecorder(stream, options);
 
     mediaRecorder.ondataavailable = function(e) {
       recordedChunks.push(e.data);
@@ -42,6 +46,7 @@ async function startRecording(){
 
 function stopRecording() {
   mediaRecorder.stop();
+  stream.getTracks().forEach(track => track.stop());
   startButton.disabled = false;
   stopButton.disabled = true;
 }
